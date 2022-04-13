@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board_replyns">
+
+	<select id="list" parameterType="map" resultType="board_reply">
+		select * from board_reply where pcno=#{pcno} and bno=#{bno} order by rno desc
+	</select>
+	
+	<insert id="insert" parameterType="board_reply">
+		<selectKey keyProperty="rno" order="BEFORE" resultType="integer">
+			select nvl(max(rno),0) + 1 rno from board_reply
+		</selectKey>
+		insert into board_reply values(#{rno},#{content},sysdate,0,'n',#{mno},#{pcno},#{bno})
+	</insert>
+	
+	<update id="update" parameterType="board_reply">
+		update board_reply set content=#{content} where pcno=#{pcno} and bno=#{bno} and rno=#{rno}
+	</update>
+	
+	<update id="delete" parameterType="board_reply">
+		update board_reply set del='y' where pcno=#{pcno} and bno=#{bno} and rno=#{rno}
+	</update>
+	
+	<update id="likesPlus" parameterType="integer">
+		update board_reply set likes = likes + 1 where rno=#{rno}
+	</update>
+	
+	<update id="likesMinus" parameterType="integer">
+		update board_reply set likes = likes - 1 where rno=#{rno}
+	</update>
+	
+	<select id="select" parameterType="integer" resultType="board_reply">
+		select * from board_reply where rno=#{rno}
+	</select>
+</mapper>

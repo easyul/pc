@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member1ns">
+	<!-- 회원 가입 -->
+	<insert id="insert" parameterType="member1">
+		<selectKey keyProperty="mno" order="BEFORE" resultType="integer">
+			select nvl(max(mno), 0) + 1 mno from member1
+		</selectKey>
+		insert into member1 values(#{mno},#{id},#{password},#{name},#{nick_name},
+			#{phone},#{gender},#{birth},#{email},sysdate,'n','n',#{identity},#{profile})
+	</insert>
+	<!-- 아이디 중복체크, id를 통해 member1 조회 -->
+	<select id="select" parameterType="member1" resultType="member1">
+		select * from member1 where id=#{id} and del='n'
+	</select>
+	<!-- 닉네임 중복체크 -->
+	<select id="confirmNick_name" parameterType="string" resultType="member1">
+		select * from member1 where nick_name=#{nick_name}
+	</select>
+	<!-- 이메일 중복체크 -->
+	<select id="confirmEmail" parameterType="string" resultType="member1">
+		select * from member1 where email=#{email}
+	</select>
+	<!-- 아이디 찾기 -->
+	<select id="findId" parameterType="member1" resultType="member1">
+		select * from member1 where name=#{name} and phone=#{phone}
+	</select>
+	<!-- 비밀번호 찾기 -->
+	<select id="findPw" parameterType="member1" resultType="member1">
+		select * from member1 where id=#{id} and email=#{email}
+	</select>
+	<!-- 비밀번호 변경 -->
+	<update id="updatePw" parameterType="member1">
+		update member1 set password=#{password} where id=#{id}
+	</update>
+	<!-- 	회원정보 수정 -->
+	<update id="update" parameterType="member1">
+		update member1 set password=#{password}, name=#{name}, phone=#{phone}, gender=#{gender}, birth=#{birth}, email=#{email}
+		<if test="profile != null">
+			, profile=#{profile}
+		</if>
+		 where id=#{id} 
+	</update>
+	<!-- mno로 멤버 조회 -->
+	<select id="selectMno" parameterType="integer" resultType="member1">
+		select * from member1 where mno=#{mno}
+	</select>
+	<!-- 점주관리 -->
+	<select id="memberList" parameterType="member1" resultType="member1">
+		select * from (select a.*, rowNum rn from (select * from member1 
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				${searchKey} like '%'||#{searchValue}||'%'
+			</if>	
+		</where>
+		order by mno desc)a) where rn between #{startRow} and #{endRow}
+	</select>
+	<select id="getTotal" parameterType="member1" resultType="integer">
+		select count(*) from member1
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				${searchKey} like '%'||#{searchValue}||'%'
+			</if>
+		</where>
+	</select>
+	<update id="blackin" parameterType="member1">
+		update member1 set blacklist = 'y' where mno=#{mno}
+	</update>
+	<update id="blackout" parameterType="member1">
+		update member1 set blacklist = 'n' where mno=#{mno}
+	</update>
+	<update id="memberDelete" parameterType="member1">
+		update member1 set del = 'y' where mno=#{mno}
+	</update>	
+</mapper>

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.service-tit {
+    display: block;
+    width: 386px;
+    height: 26px;
+    border: 1px solid #000000;
+}
+
+.layer-service {
+	display: none;
+	position: absolute;
+    left: 768px;
+    top: 756px;
+    width: 386px;
+    background: #fff;
+    z-index: 2;
+    border: 1px solid #d9d9d9;
+    padding: 17px 25px 20px;
+}
+.layer-service:hover {
+	display: block;
+}
+
+.service-tit:hover + .layer-service {
+    display: block;
+}
+
+.clear {
+    clear: both;
+}

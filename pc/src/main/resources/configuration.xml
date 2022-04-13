@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="board" type="com.ch.pc.model.Board"/>
+		<typeAlias alias="board_reply" type="com.ch.pc.model.Board_reply"/>
+		<typeAlias alias="board_likes" type="com.ch.pc.model.Board_likes"/>
+		<typeAlias alias="reply_likes" type="com.ch.pc.model.Reply_likes"/>
+		<typeAlias alias="fee" type="com.ch.pc.model.Fee"/>
+		<typeAlias alias="member1" type="com.ch.pc.model.Member1"/>
+		<typeAlias alias="pc" type="com.ch.pc.model.Pc"/> 
+		<typeAlias alias="pcimage" type="com.ch.pc.model.Pcimage"/>
+		<typeAlias alias="bookmark" type="com.ch.pc.model.Bookmark"/>
+		<typeAlias alias="seat" type="com.ch.pc.model.Seat"/>
+ 		<typeAlias alias="reservation" type="com.ch.pc.model.Reservation"/>
+		<typeAlias alias="review" type="com.ch.pc.model.Review"/>
+		<typeAlias alias="review_likes" type="com.ch.pc.model.Review_likes"/>
+		<typeAlias alias="keyword" type="com.ch.pc.model.Keyword"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="board.xml"/>
+		<mapper resource="board_reply.xml"/>
+		<mapper resource="board_likes.xml"/>
+		<mapper resource="reply_likes.xml"/>
+		<mapper resource="fee.xml"/>
+		<mapper resource="member1.xml"/>
+		<mapper resource="pc.xml"/>
+		<mapper resource="bookmark.xml"/>
+ 		<mapper resource="reservation.xml"/>
+		<mapper resource="review.xml"/>
+		<mapper resource="review_likes.xml"/>
+	</mappers>
+	
+</configuration>

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+.total_content {
+	display: flax;
+	justify-content: center;
+	align-items: center;
+	padding: 0 100px;
+	width: 100%;
+	margin-top: 50px;
+}
+h2 {
+	margin: 0 0 -40px 100px;
+}
+.write_ok {
+	margin: 10px;
+}
+.subject_css{
+	width: 350px;
+}
+.content_write{
+ 	margin: 10px;
+}

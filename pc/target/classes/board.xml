@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardns">
+
+	<select id="list" parameterType="board" resultType="board">
+		select * from (select rowNum rn, a.* from (select b.*, m.nick_name from board b, member1 m where b.mno=m.mno and pcno=#{pcno}
+			<if test="searchValue != null and searchValue != ''">
+				 and ${searchKey} like '%'||#{searchValue}||'%' and b.del='n'
+			</if>
+		order by b.reg_date desc)a) where rn between #{startRow} and #{endRow} order by bno desc
+	</select>	
+	<select id="getTotal" parameterType="board" resultType="integer">
+		select count(*) from board b, member1 m where b.mno=m.mno and pcno=#{pcno}
+			<if test="searchValue != null and searchValue != ''">
+				and ${searchKey} like '%'||#{searchValue}||'%' and b.del='n'
+			</if>
+	</select>
+
+	<select id="select" parameterType="board" resultType="board">
+		select * from board where bno=#{bno} and pcno=#{pcno}
+	</select>
+	
+	<update id="updateRead_cnt" parameterType="board">
+		update board set read_cnt = read_cnt + 1 where bno=#{bno} and pcno=#{pcno}
+	</update>	
+		
+	<insert id="insert" parameterType="board">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="integer">
+			select nvl(max(bno),0) + 1 bno from board
+		</selectKey>
+		insert into board values(#{bno},#{subject},#{content},sysdate,0,0,'n',#{mno},#{pcno})
+	</insert>
+	
+	<update id="update" parameterType="board">
+		update board set subject=#{subject}, content=#{content} where bno=#{bno} and pcno=#{pcno}
+	</update>
+	
+	<update id="delete" parameterType="integer">
+		update board set del = 'y' where pcno=#{pcno} and bno=#{bno}
+	</update>
+	
+	<update id="likesPlus" parameterType="integer">
+		update board set likes = likes + 1 where bno=#{bno}
+	</update>
+	
+	<update id="likesMinus" parameterType="integer">
+		update board set likes = likes - 1 where bno=#{bno}
+	</update>
+	
+	<select id="selectOne" resultType="board">
+		select * from board where bno=#{bno}
+	</select>
+</mapper>

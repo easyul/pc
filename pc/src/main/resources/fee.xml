@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="feens">
+	<!-- 요금설정 -->
+	<insert id="feeInsert" parameterType="fee">
+		insert into fee (pcno,w1000,w3000,w5000,w10000,w50000,w100000) values(#{pcno},#{w1000}, #{w3000}, #{w5000}, #{w10000}, #{w50000}, #{w100000})
+	</insert>
+	<!-- 요금 조회 -->
+	<select id="selectFee" parameterType="integer" resultType="fee">
+		select * from fee where pcno=#{pcno}
+	</select>
+	
+	<update id="feeUpdate" parameterType="fee">
+		update fee set w1000=#{w1000},w3000=#{w3000},w5000=#{w5000},w10000=#{w10000},w50000=#{w50000},w100000=#{w100000} where pcno=#{pcno}
+	</update>
+</mapper>

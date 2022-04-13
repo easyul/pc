@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review_likesns">
+
+	<!-- 회원이 댓글 추천 했는지 조회 -->
+	<select id="select" resultType="integer">
+		select count(*) from review_likes where mno=#{mno} and rno=#{rno}
+	</select>
+	
+	<!-- 회원이 게시글 좋아요 클릭 -->
+	<insert id="insert" parameterType="review_likes">
+		insert into review_likes values(#{mno}, #{rno})
+	</insert>
+	
+	<!-- 회원이 게시글 좋아요 취소 -->
+	<delete id="delete">
+		delete from review_likes where mno=#{mno} and rno=#{rno}
+	</delete>
+</mapper>

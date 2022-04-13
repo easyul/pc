@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board_likesns">
+
+	<select id="select" resultType="integer">
+		select count(*) from board_likes where mno=#{mno} and bno=#{bno}
+	</select>
+	
+	<insert id="insert" parameterType="board_likes">
+		insert into board_likes values(#{mno},#{bno})
+	</insert>
+	
+	<delete id="delete">
+		delete from board_likes where mno=#{mno} and bno=#{bno}
+	</delete>
+</mapper>
